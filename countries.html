@@ -12,7 +12,6 @@
       id="search-field"
     /><button id="search-btn">Søk</button>
     <script>
-      <h1>Countries</h1>
       let searchCountry = document.querySelector("#search-field");
       let searchBtn = document.querySelector("#search-btn");
       let allCountries = [
@@ -261,6 +260,98 @@
         { name: "Zambia", code: "ZM" },
         { name: "Zimbabwe", code: "ZW" },
       ];
+    
+    // .map: 
+    
+    //lager et nytt array basert på properties.
+
+    // når vi lager et nytt array må vi lagre det arrayet. Her vil jeg lage et array med alle landene sine navn. jeg lager en ny let eller const, og skriver let/const = allcountries.map + to paranteser. vi lager parameteret "country" for vi skal inn i hvert land i arrayet. Deretter lager vi en arrow function
+    let allCountryNames = allCountries.map((country) => country.name);
+
+    console.log(allCountryNames);
+    // dette er .map: vi mapper ut propertyen vi vil ha. i dette tilfelle alle navnene! 
+
+
+    // filter: 
+
+    // Vi filtrer hvert objekt basert på om de passerer en test.
+    
+    let allCountriesIncludingAn =allCountries.filter((country)=> country.name.toLowerCase().includes("an"));
+    
+    // console.log(allCountriesIncludingAn);
+
+
+
+    // .find = fint å bruke for å finne en unik verdi! I vårt tilfelle kan vi feks finne en spesiell landskode feks landkoden til norge. Find lager ikke et nytt array, men lager verdien vi finner i en ny variabel.
+
+    // vi skal se på propertyen inni objektet. siden det er en propertien må vi ha {} rundt. 
+
+    let norway = allCountries.find(({code}) => code === "NO" );
+    console.log(norway);
+
+    // vi får ikke et array returnert, men et objekt. 
+
+
+
+    // for.each = går gjennom alle plasser i arrayet, men lager IKKE et nytt array eller objekt. kan lage masse kult og gjøre mye. 
+
+    
+// vi sier: for hvert land skal 
+    allCountries.forEach((country) => {
+      // vi sier: hva skal skje per objekt:
+      const countryContainer = document.createElement("div");
+      // gir hvert land grønn bakgrunnsfarge. nå skjer dette for hver plass vi har et country i allCountry arrayet vårt: 
+      countryContainer.style.backgroundColor = "green";
+      // skriver ut navnet til landet til en p-tag:
+      const countryName = document.createElement("p");
+      // vil også gjøre dette synlig på siden vår, bruker innerHTML = det landet vi er på sitt .name. (som i for-loop) 
+      countryName.innerHTML = country.name;
+      // skjer ingen ting før vi etter dette appender taggene vi har laget. derfor må vi først appende p-taggen i CountryName:
+      countryContainer.append(countryName)
+      // countryContainer ligger ikke dom-treet. vil ikke dukke opp. for å nå den skriver vi:
+      document.body.append(countryContainer);
+    }) ;
+ 
+
+// vi skal nå et søkefelt og en knapp på sdien vår. Skal se på de forskjellige metodene fungerer hvis vi skulle søkt gjennom arrayet.
+// Vi vil legge til en event på searchButton. 
+
+// MAP: 
+searchBtn.addEventListener("click", searchAllCountries); //funksjonen vi jobber med og lager heter searchAllCountries
+function searchAllCountries(){ // vi bruker map som første metode skriver derfor searchResultArrat fordi .map lager et nytt array. Vi vil ha med de landene brukeren har søkt etter, skriver derfor:
+  let searchResultArray = allCountries.map((country) => 
+  country.name.includes(searchCountry.value)) // vi spør: inneholder countryet brukeren har skrevet searchCountry-variabelen sin verdi: Det brukeren har skrevet. 
+} 
+// hvis vi søker på nettsiden etter feks "Norway" skjer det ikke noe på selve siden. Men hvis vi åpner opp i console.logen ser vi at det står masse false utenom på 164-plass som er true som er "Norway". .map returnerer ikke tilbake det brukeren har skrevet. den returnerer: "Stemmer denne påstanden her for dette landet?" Hvis vi vil ha true/false er .map kanskje feil metode å bruke. 
+
+
+
+// FILTER: 
+ //funksjonen vi jobber med og lager heter searchAllCountries
+function searchAllCountries(){ // 
+  let searchResultArray = allCountries.filter((country) => 
+  country.name.includes(searchCountry.value)) // vi lager et nytt array og plasserer de landene som passerer testen inn i det nye arrayet. Hvis vi feks søker etter "no" i søkefeltet får vi alle land (med små no i små bokstaver listet ut. Dette kan vi jobbe videre med.)
+}
+
+// FIND:
+//funksjonen vi jobber med og lager heter searchAllCountries
+function searchAllCountries(){ // 
+  let searchResultArray = allCountries.find((country) => // find søker helt til den finner den første som matcher. hvis vi søker på "no" får vi det første landet den finner med no. (husk å legge til toLowerCase() både på value og country.name hvis man vi ha med små og store bokstaver)
+  country.name.includes(searchCountry.value)) 
+}
+
+// FOR EACH: 
+// går som sagt bare gjennom hver plass og gjør kanskje noe per plass. 
+function searchAllCountries(){ // 
+  allCountries.forEach((country) => { // går gjennom hver plass og gjennomfører en if-test per plass. GÅr på hvert country, inneholder den plassen det brukeren skrev: console.log det ut. 
+  if (country.name.includes(searchCountry.value.toLowerCase())){
+    console.log(searchAllCountries);
+  }
+  });
+  
+}
+
+
     </script>
   </body>
 </html>
